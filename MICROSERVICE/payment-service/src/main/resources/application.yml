@@ -9,8 +9,6 @@ spring:
     import: optional:file:.env[.properties]
 
   jackson:
-    serialization:
-      write-dates-as-timestamps: false
     deserialization:
       fail-on-unknown-properties: false
 
