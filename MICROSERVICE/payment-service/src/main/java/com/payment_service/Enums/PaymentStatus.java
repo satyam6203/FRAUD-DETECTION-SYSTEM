@@ -1,4 +1,4 @@
-package com.fraud_detection_service.Enums;
+package com.payment_service.Enums;
 
 public enum PaymentStatus {
     PENDING,

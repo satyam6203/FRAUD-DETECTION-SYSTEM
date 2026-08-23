@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: fraud-detection-service
+    name: payment-service
 
   config:
     import: optional:file:.env[.properties]

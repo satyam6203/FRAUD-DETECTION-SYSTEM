@@ -1,8 +1,8 @@
-package com.fraud_detection_service.Service;
+package com.payment_service.Service;
 
-import com.fraud_detection_service.DTO.Request.PaymentRequest;
-import com.fraud_detection_service.DTO.Rquest.PaymentResponse;
-import com.fraud_detection_service.Enums.PaymentStatus;
+import com.payment_service.DTO.Request.PaymentRequest;
+import com.payment_service.DTO.Rquest.PaymentResponse;
+import com.payment_service.Enums.PaymentStatus;
 
 import java.util.List;
 

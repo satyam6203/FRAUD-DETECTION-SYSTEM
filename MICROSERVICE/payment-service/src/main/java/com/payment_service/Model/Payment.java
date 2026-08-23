@@ -1,6 +1,6 @@
-package com.fraud_detection_service.Model;
+package com.payment_service.Model;
 
-import com.fraud_detection_service.Enums.PaymentStatus;
+import com.payment_service.Enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -24,7 +24,7 @@ public class Payment {
     private String id;
 
     @Column(nullable = false)
-    private String sendId;
+    private String senderId;
 
     @Column(nullable = false)
     private String receiverId;

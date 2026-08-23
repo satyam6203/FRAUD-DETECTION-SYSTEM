@@ -1,4 +1,4 @@
-package com.fraud_detection_service.DTO.Request;
+package com.payment_service.DTO.Request;
 
 import jakarta.validation.constraints.*;
 import lombok.*;

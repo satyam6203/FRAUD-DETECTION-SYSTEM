@@ -8,10 +8,10 @@
 		<version>4.1.1</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.fraud-detection</groupId>
-	<artifactId>fraud-detection-service</artifactId>
+	<groupId>com.payment-service</groupId>
+	<artifactId>payment-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name/>
+	<name>payment-service</name>
 	<description/>
 	<url/>
 	<licenses>

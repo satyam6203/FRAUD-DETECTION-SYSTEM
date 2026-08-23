@@ -1,25 +1,23 @@
-package com.fraud_detection_service.DTO.Rquest;
+package com.payment_service.DTO.Event;
 
-import com.fraud_detection_service.Enums.PaymentStatus;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PaymentResponse {
+public class PaymentEvent {
 
-    private String id;
+    private String paymentId;
     private String senderId;
     private String receiverId;
     private BigDecimal amount;
     private String currency;
-    private PaymentStatus status;
     private String ipAddress;
     private String deviceId;
-    private String createdAt;
-    private String message;
+    private Instant createdAt;
 }
