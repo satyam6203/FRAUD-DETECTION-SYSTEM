@@ -2,6 +2,8 @@ server:
   port: 8082
 
 spring:
+  config:
+    import: "optional:file:.env[.properties]"
   application:
     name: fraud-detection-service
 
@@ -20,11 +22,37 @@ spring:
       hibernate:
         format_sql: true
 
+  mail:
+    host: ${MAIL_HOST:localhost}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          ssl:
+            enable: true
+          starttls:
+            enable: false
+
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+    consumer:
+      group-id: fraud-detection-service
+    topics:
+      payment-events: payment-events
+
+kafka:
+  enabled: true
+
 services:
   payment-service:
     url: http://localhost:8081
 
 fraud:
+  alert:
+    recipient: ${FRAUD_ALERT_EMAIL:}
   rules:
     high-amount-threshold: 10000
     max-transactions-per-hour: 10

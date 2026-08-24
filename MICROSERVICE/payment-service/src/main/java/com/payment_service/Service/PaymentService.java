@@ -1,7 +1,7 @@
 package com.payment_service.Service;
 
 import com.payment_service.DTO.Request.PaymentRequest;
-import com.payment_service.DTO.Rquest.PaymentResponse;
+import com.payment_service.DTO.Request.PaymentResponse;
 import com.payment_service.Enums.PaymentStatus;
 
 import java.util.List;
@@ -14,8 +14,5 @@ public interface PaymentService {
 
     List<PaymentResponse> getPaymentsBySender(String senderId);
 
-    PaymentResponse updatePaymentStatus(
-            String paymentId,
-            PaymentStatus status
-    );
+    PaymentResponse updatePaymentStatus(String paymentId, PaymentStatus status);
 }

@@ -1,4 +1,4 @@
-package com.payment_service.DTO.Rquest;
+package com.payment_service.DTO.Request;
 
 import com.payment_service.Enums.PaymentStatus;
 import lombok.*;

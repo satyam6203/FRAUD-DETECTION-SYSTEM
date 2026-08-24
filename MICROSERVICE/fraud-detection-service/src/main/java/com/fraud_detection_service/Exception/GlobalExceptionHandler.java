@@ -17,10 +17,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Map<String, Object>> handleRuntimeException(
             RuntimeException ex) {
         log.error("Runtime exception: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(Map.of(
                 "timestamp", LocalDateTime.now().toString(),
-                "status", 404,
-                "error", "Not Found",
+                "status", 500,
+                "error", "Internal Server Error",
                 "message", ex.getMessage()
         ));
     }

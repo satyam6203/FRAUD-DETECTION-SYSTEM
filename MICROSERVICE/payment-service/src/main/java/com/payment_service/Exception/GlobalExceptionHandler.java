@@ -19,11 +19,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
         log.error("Runtime exception: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ErrorResponse.builder()
                         .timestamp(LocalDateTime.now())
-                        .status(HttpStatus.NOT_FOUND.value())
-                        .error("Not Found")
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                        .error("Internal Server Error")
                         .message(ex.getMessage())
                         .build());
     }

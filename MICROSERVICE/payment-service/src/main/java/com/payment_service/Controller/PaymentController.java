@@ -1,7 +1,7 @@
 package com.payment_service.Controller;
 
 import com.payment_service.DTO.Request.PaymentRequest;
-import com.payment_service.DTO.Rquest.PaymentResponse;
+import com.payment_service.DTO.Request.PaymentResponse;
 import com.payment_service.Enums.PaymentStatus;
 import com.payment_service.Service.PaymentService;
 import io.swagger.v3.oas.annotations.Operation;

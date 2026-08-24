@@ -19,20 +19,16 @@ public class PaymentServiceClient {
     public void updatePaymentStatus(String paymentId, String status) {
         log.info("Updating payment {} status to {}", paymentId, status);
         try {
-            webClientBuilder.build()
+            String response = webClientBuilder.build()
                     .patch()
                     .uri(paymentServiceUrl + "/api/v1/payments/{id}/status?status={status}",
                             paymentId, status)
                     .retrieve()
                     .bodyToMono(String.class)
-                    .doOnSuccess(response ->
-                            log.info("Payment {} status updated to {}", paymentId, status))
-                    .doOnError(error ->
-                            log.error("Failed to update payment {} status: {}",
-                                    paymentId, error.getMessage()))
-                    .subscribe();
+                    .block();
+            log.info("Payment {} status updated to {} | response: {}", paymentId, status, response);
         } catch (Exception e) {
-            log.error("Error calling payment service: {}", e.getMessage());
+            log.error("Failed to update payment {} status: {}", paymentId, e.getMessage());
         }
     }
 }

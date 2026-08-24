@@ -9,6 +9,7 @@ import com.fraud_detection_service.enums.RiskLevel;
 import com.fraud_detection_service.model.FraudAlert;
 import com.fraud_detection_service.repository.FraudAlertRepository;
 import com.fraud_detection_service.service.FraudDetectionService;
+import com.fraud_detection_service.service.NotificationService;
 import com.fraud_detection_service.service.RiskScoringEngine;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +27,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
     private final FraudAlertRepository fraudAlertRepository;
     private final RiskScoringEngine riskScoringEngine;
     private final PaymentServiceClient paymentServiceClient;
+    private final NotificationService notificationService;
 
     @Override
     @Transactional
@@ -45,6 +47,7 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
                 .currency(event.getCurrency())
                 .riskScore(assessment.getRiskScore())
                 .riskLevel(assessment.getRiskLevel())
+                .status(AlertStatus.OPEN)
                 .ipAddress(event.getIpAddress())
                 .deviceId(event.getDeviceId())
                 .riskReasons(assessment.getRiskReasons().isEmpty() ? "No risk factors detected"
@@ -67,8 +70,11 @@ public class FraudDetectionServiceImpl implements FraudDetectionService {
             log.warn("High/Critical risk detected | paymentId: {} | action: FLAGGED", event.getPaymentId());
             paymentServiceClient.updatePaymentStatus(event.getPaymentId(), "FLAGGED");
 
+            notificationService.sendFraudAlert(savedAlert);
+
         } else {
-            log.info("Low/Medium risk detected | paymentId: {} | action: COMPLETED", event.getPaymentId());
+            log.info("Low/Medium risk detected | paymentId: {} | action: COMPLETED | no email notification sent",
+                    event.getPaymentId());
             paymentServiceClient.updatePaymentStatus(event.getPaymentId(), "COMPLETED");
         }
     }

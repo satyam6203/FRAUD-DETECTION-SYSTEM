@@ -2,8 +2,9 @@ package com.payment_service.Service.Impl;
 
 import com.payment_service.DTO.Event.PaymentEvent;
 import com.payment_service.DTO.Request.PaymentRequest;
-import com.payment_service.DTO.Rquest.PaymentResponse;
+import com.payment_service.DTO.Request.PaymentResponse;
 import com.payment_service.Enums.PaymentStatus;
+import com.payment_service.Kafka.PaymentEventProducer;
 import com.payment_service.Model.Payment;
 import com.payment_service.Repository.PaymentRepository;
 import com.payment_service.Service.PaymentService;
@@ -24,6 +25,7 @@ import java.util.List;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
+    private final PaymentEventProducer paymentEventProducer;
 
     @Override
     @Transactional
@@ -57,6 +59,8 @@ public class PaymentServiceImpl implements PaymentService {
                 .deviceId(savedPayment.getDeviceId())
                 .createdAt(savedPayment.getCreatedAt())
                 .build();
+
+        paymentEventProducer.publishPaymentEvent(event);
 
         return mapToResponse(savedPayment, "Payment initiated and sent for fraud analysis");
     }
