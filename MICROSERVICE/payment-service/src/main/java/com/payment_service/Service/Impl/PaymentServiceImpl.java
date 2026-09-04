@@ -4,6 +4,7 @@ import com.payment_service.DTO.Event.PaymentEvent;
 import com.payment_service.DTO.Request.PaymentRequest;
 import com.payment_service.DTO.Request.PaymentResponse;
 import com.payment_service.Enums.PaymentStatus;
+import com.payment_service.Exception.PaymentNotFoundException;
 import com.payment_service.Kafka.PaymentEventProducer;
 import com.payment_service.Model.Payment;
 import com.payment_service.Repository.PaymentRepository;
@@ -12,8 +13,6 @@ import com.payment_service.Service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -66,14 +65,13 @@ public class PaymentServiceImpl implements PaymentService {
     }
 
     @Override
-    @Cacheable(value = "payments", key = "#paymentId")
     public PaymentResponse getPaymentById(String paymentId) {
 
         log.info("Fetching payment by id: {}", paymentId);
 
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() ->
-                        new RuntimeException("Payment not found: " + paymentId)
+                        new PaymentNotFoundException(paymentId)
                 );
         return mapToResponse(payment, "Payment retrieved successfully");
     }
@@ -92,13 +90,12 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    @CacheEvict(value = "payments", key = "#paymentId")
     public PaymentResponse updatePaymentStatus(String paymentId, PaymentStatus status) {
 
         log.info("Updating payment {} status to {}", paymentId, status);
         Payment payment = paymentRepository.findById(paymentId)
                 .orElseThrow(() ->
-                        new RuntimeException("Payment not found: " + paymentId)
+                        new PaymentNotFoundException(paymentId)
                 );
         payment.setStatus(status);
         Payment updatedPayment = paymentRepository.save(payment);

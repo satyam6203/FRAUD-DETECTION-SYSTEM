@@ -16,6 +16,18 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(PaymentNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handlePaymentNotFoundException(PaymentNotFoundException ex) {
+        log.warn("Payment not found: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .error("Not Found")
+                        .message(ex.getMessage())
+                        .build());
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleRuntimeException(RuntimeException ex) {
         log.error("Runtime exception: {}", ex.getMessage());

@@ -48,7 +48,7 @@ kafka:
 
 services:
   payment-service:
-    url: http://localhost:8081
+    url: ${PAYMENT_SERVICE_URL:http://localhost:8081}
 
 fraud:
   alert:
